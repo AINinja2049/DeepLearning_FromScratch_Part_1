@@ -1,4 +1,6 @@
 from typing import List
+import numpy as np
+from numpy import ndarray
 
 class layer:
     pass
@@ -50,5 +52,37 @@ class NeuralNN:
 
 NeuralNN = NeuralNN(layers=[layer(),layer()], loss=loss())
 
+#-----Squares and LeakyRelu function-----#
+def squares(x1: ndarray, x2: ndarray) -> ndarray:
+    return pow(x1,2)+pow(x2,3)
+print("Squares + Cubes = ",squares(2,2))
 
-        
+def leakyrelu(x: ndarray) -> ndarray:
+    return np.maximum(0.2*x,x)
+
+print("Leaky Relu: ",leakyrelu(np.array([-4,-3,-2,-1,0,1,2,3,4])))
+
+#-----Function-----#
+def f(input_: ndarray)-> ndarray:
+    output = 2
+    return output
+print("Function general: ",f(np.array(2)))
+
+def add(a: int, b: int) -> int:
+    return a + b
+
+print("addition check",add(4,3.3))
+
+#-----Derivatives using callable-----#
+from typing import Callable # Callable is type hint function it tells  
+
+def deriv(func: Callable[[ndarray],ndarray], # Here it means a input is an array and output is also an array 
+          input_: ndarray,
+          delta: float = 0.001)-> ndarray:
+    return (func(input_+delta)-func(input_-delta))/(2*delta)
+
+def unknown(x: ndarray) -> ndarray:
+    return np.power(x,3)
+
+y = np.array([1,2,3,4,5])
+print("Derivatives", deriv(unknown,y,delta=0.0001) )
