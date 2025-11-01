@@ -35,4 +35,20 @@ Object = Computers("Hewlett-Packard","USA-Standford two friends flipped a \
                        coin", "Still owened by HP")
 print("Pure Object",Object)
 print("Instance of the object",Object.company)
+
+
+#----Practice-2----#
+class NeuralNN:
+    def __init__(self,
+                 layers:List[layer],
+                 loss:loss,
+                 learning_rate:float=0.01) -> None:
+        self.layers = layers
+        self.loss = loss
+        self.learning_rate = learning_rate
+        print("Neural network practice sesssion - 2")
+
+NeuralNN = NeuralNN(layers=[layer(),layer()], loss=loss())
+
+
         
