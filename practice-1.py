@@ -1,19 +1,20 @@
 from typing import List
 
-class Layer:
+class layer:
     pass
 
-class Loss:
+class loss:
     pass
 
 class NeuralNetwork:
     def __init__(self,
-                 layers: List[Layer],
-                 loss: Loss,
+                 layers: List[layer],
+                 loss: loss,
                  learning_rate: float = 0.01) -> None:
         self.layers = layers
         self.loss = loss
         self.learning_rate = learning_rate
-        print("Neural network initialized!")
-    
-nn = NeuralNetwork(layers=[Layer(), Layer()], loss=Loss())
+        print("My practice neural network initialized!")
+
+nn = NeuralNetwork(layers=[layer(),layer()], loss=loss())
+        
