@@ -86,3 +86,42 @@ def unknown(x: ndarray) -> ndarray:
 
 y = np.array([1,2,3,4,5])
 print("Derivatives", deriv(unknown,y,delta=0.0001) )
+
+
+
+#-----Nested functions-----#
+from typing import List
+from typing import Callable
+import numpy as np
+from numpy import ndarray
+
+
+# A function that takes an ndarray as an argument and ndarray as output  
+ArrayFunction = Callable[[ndarray],ndarray]
+
+# Making a chain: A list of function f2(f2(x))
+Chain = List[ArrayFunction]
+
+# Let's define the function
+
+def chain_length_2(chain: Chain,
+                   x: ndarray) -> ndarray:
+    '''Evaluates two nested functions
+    '''
+    assert len(chain)==2, "Length of the chain function should be 2"
+    f1 = chain[0] #first list element is first function
+    f2 = chain[1]
+    return f2(f1(x))
+
+# Example functions
+def square(x: ndarray) -> ndarray:
+    return np.power(x, 2)
+
+def double(x: ndarray) -> ndarray:
+    return 2 * x
+
+twofunction = [square,double]
+
+z = np.array([1,2,3,4,5])
+y = chain_length_2(twofunction,z)
+print("Chain function results", y)
