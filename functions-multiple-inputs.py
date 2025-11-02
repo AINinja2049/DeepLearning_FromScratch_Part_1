@@ -103,10 +103,11 @@ def matrix_function_forward(X: ndarray,
     L = np.sum(S)
     return L
 # L = G(S(N(X,W)))
-# dL/dX = dG/dS * dS/dN * dN/dX
+# dL/dX = dG/dS * dS/dN * dN/dX*W^T
+# dL/dW = dG/dS * dS/dN * X^T* dN/dW
 
 ########## Backpropagation
-def backpropagation(X: ndarray,
+def matrix_function_backward_sum_1(X: ndarray,
                     W: ndarray,
                     sigma: ArrayFunction)->ndarray:
     assert X.shape[1]==W.shape[0]
@@ -125,7 +126,23 @@ X = np.random.randn(3,3)
 W = np.random.randn(3,2) #2 is the number of neurons = col
 print(X)
 print(matrix_function_forward(X,W,sigmoid))
-print(backpropagation(X,W,sigmoid))
+print(matrix_function_backward_sum_1(X,W,sigmoid))
 X1 = X.copy()
 X1[0,0] +=0.001
 print((matrix_function_forward(X1,W,sigmoid) - matrix_function_forward(X,W,sigmoid))/0.001)
+
+########## Backward sum 2
+def matrix_function_backward_sum_2(X: ndarray,
+                                   W: ndarray,
+                                   sigma: ArrayFunction)->ndarray:
+    assert X.shape[1]==W.shape[0]
+    N = np.dot(X,W)
+    S = sigma(N)
+    dSdN = deriv(sigma,N)
+    dLdS = np.ones_like(S)
+    dLdN = dLdS*dSdN
+    dNdW = np.transpose(X,(1,0))
+    dLdW = np.dot(dNdW,dLdN)
+    return dLdW
+
+print(matrix_function_backward_sum_2(X,W,sigmoid))
