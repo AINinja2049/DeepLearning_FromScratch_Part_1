@@ -18,3 +18,20 @@ def forward_regression(X_batch: ndarray,
     forward_info['P'] = P
     forward_info['L'] = loss
     return loss, forward_info
+
+def loss_gradients(forward_info: Dict[str,ndarray],
+                   weights: Dict[str, ndarray])->Dict[str,ndarray]:
+    '''
+    Compute dL/dW and dL/dB for step by step linear regression model.'''
+    batch_size = forward_info['X'].shape[0]
+    dLdP = -2*(forward_info['y']-forward_info['P'])
+    dPdN = np.ones_like(forward_info['N'])
+    dPdB = np.ones_like(forward_info['B'])
+    dLdN = dLdP * dPdN
+    dNdW = np.transpose(forward_info['X'],(1,0))
+    dLdW = np.dot(dNdW,dLdN) # X^T on the left. Note on first chapter last section
+    dLdB = (dLdP * dPdB).sum(axis = 0)
+    loss_gradients: Dict[str, ndarray]={}
+    loss_gradients['W'] = dLdW
+    loss_gradients['B'] = dLdB
+    return loss_gradients
