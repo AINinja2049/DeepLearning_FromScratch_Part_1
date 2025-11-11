@@ -174,3 +174,38 @@ losses = train_info[0]
 weights = train_info[1]
 plt.plot(list(range(1000)),losses)
 plt.show()
+
+
+
+##### Predictions #####
+def predict(X: ndarray,
+            weights: Dict[str,ndarray]):
+    '''Generate predictions from the step-by-step linear regression model
+    '''
+    N = np.dot(X,weights['W'])
+    return N+weights['B']
+
+preds = predict(X_test, weights) # weights = train_info[0]
+plt.scatter(preds,y_test)
+plt.plot(y_test,y_test)
+plt.show()
+
+
+##### Mean absolute error #####
+def mae(preds: ndarray,actuals: ndarray)->float:
+    '''Compute mean absolute error
+    '''
+    return np.mean(np.abs(preds-actuals))
+
+##### Root mean squared error #####
+def rmse(preds: ndarray, actuals: ndarray)->float:
+    '''Compute RMSE
+    '''
+    return np.sqrt(np.mean(np.power(preds-actuals,2)))
+
+print("Mean absolute error: ", mae(preds,y_test))
+print("Root mean squared error: ", rmse(preds,y_test))
+
+
+plt.scatter(X_test[:,6],y_test)
+plt.show()
