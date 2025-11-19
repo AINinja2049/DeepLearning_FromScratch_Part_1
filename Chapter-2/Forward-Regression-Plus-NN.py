@@ -24,9 +24,11 @@ y_train, y_test = y_train.reshape(-1,1), y_test.reshape(-1,1)
 
 
 #from sklearn.linear_model import LinearRegression
-#lr = LinearRegression(fit_intercept=True)
-#lr.fit(X_train, y_train)
-#preds = lr.predict(X_test)
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression(fit_intercept=True)
+lr.fit(X_train, y_train)
+sckpreds = lr.predict(X_test)
+
 #plt.scatter(preds, y_test)
 #plt.plot([0, 300], [0, 300])
 #plt.show()
@@ -206,6 +208,14 @@ def rmse(preds: ndarray, actuals: ndarray)->float:
 print("Mean absolute error: ", mae(preds,y_test))
 print("Root mean squared error: ", rmse(preds,y_test))
 
+print("SKMean absolute error: ", mae(sckpreds,y_test))
+print("SKRoot mean squared error: ", rmse(sckpreds,y_test))
 
 plt.scatter(X_test[:,6],y_test)
 plt.show()
+
+print(np.round(weights['W'].reshape(-1),4))
+print(np.round(lr.coef_,4))
+
+print(np.round(weights['B'].reshape(-1),4))
+print(np.round(lr.intercept_,4))
